@@ -54,10 +54,6 @@ public:
 	//Pre: List object exists.
 	//Post: The list is printed to the console.
 
-	void GetCurrentPos();
-	//Pre: List object exists.
-	//Post: The item that the current position pointer is pointing at is printed to the screen.
-
 private:
 	int length;
 	Node* front; //Head ptr that contains mem. address of front of list

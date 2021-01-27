@@ -49,9 +49,6 @@ void ListOperationsMenu(UnsortedList &list) {
 		cout << "List contents: \n";
 		list.PrintList();
 
-		cout << "\nCurrent position: \n";
-		list.GetCurrentPos();
-
 		cout << "\nEnter your selection from the menu below: \n\n";
 		cout << "1 - Insert an item into the list.\n";
 		cout << "2 - Search for an item in the list.\n";

@@ -165,6 +165,3 @@ void UnsortedList::PrintList() {
 	}
 }
 
-void UnsortedList::GetCurrentPos() {
-
-}
