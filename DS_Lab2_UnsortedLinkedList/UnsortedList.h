@@ -50,6 +50,10 @@ public:
 	//Post: The mathematical operation union is performed on the two lists -
 	//as if they were two sets. (All elements, if repeated elements, do not include)
 
+	void PrintList();
+	//Pre: List object exists.
+	//Post: The list is printed to the console.
+
 private:
 	int length;
 	Node* front; //Head ptr that contains mem. address of front of list

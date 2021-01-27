@@ -1,9 +1,8 @@
 #include "ItemType.h"
 
-ItemType::ItemType()
-{
+ItemType::ItemType() {
 	item = 0;
-}
+};
 
 RelationType ItemType::ComparedTo(ItemType inputItem)
 {

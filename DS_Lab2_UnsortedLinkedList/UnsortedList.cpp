@@ -9,14 +9,17 @@ UnsortedList::UnsortedList() {
 	currentPos = nullptr;
 }
 
-Node* UnsortedList::Search(ItemType inputItem) {
+Node *UnsortedList::Search(ItemType inputItem) {
 	//Allocating memory for a ptr to iterate over the list.
-	Node* iterator = new Node;
+	Node* iterator = front;
 
-	while (iterator->next != NULL) {
+	while (iterator != NULL) {
 		if (iterator->data.ComparedTo(inputItem) == EQUAL) {
 			return iterator;
+		} else {
+			iterator = iterator->next;
 		}
+		
 	}
 	return NULL;
 }
@@ -26,6 +29,7 @@ void UnsortedList::InsertItem(ItemType inputItem) {
 	Node* tempTrailer = NULL;
 
 	if (front == NULL) {
+		temp = new Node;
 		temp->data = inputItem;
 		temp->next = NULL;
 
@@ -57,11 +61,18 @@ void UnsortedList::DeleteItem(ItemType item, bool& found) {
 	found = false;
 
 	if (temp->data.ComparedTo(item) == EQUAL) { //if deleted node at front of list
-		tempTrailer->next = temp->next;
-		front = tempTrailer;
-		delete temp;
+		found = true;
+		if (front->next != NULL) {
+			tempTrailer = front->next;
+			front = tempTrailer;
+			delete temp;
+		} else {
+			delete temp;
+			front = NULL;
+		}
+		
 	} else {
-		while (temp == NULL && !found) {
+		while (temp != NULL && !found) {
 			if (temp->data.ComparedTo(item) == EQUAL) {
 				found = true;
 				//Rearranging pointers for deallocation of node.
@@ -129,4 +140,18 @@ void UnsortedList::Union(UnsortedList list1, UnsortedList list2) {
 
 
 
+}
+
+void UnsortedList::PrintList() {
+	Node *temp = front;
+
+	if (temp == NULL) {
+		std::cout << "List is empty.\n";
+	} else {
+		while (temp != NULL) {
+			std::cout << temp->data.Get() << " ";
+			temp = temp->next;
+		}
+		std::cout << std::endl;
+	}
 }
