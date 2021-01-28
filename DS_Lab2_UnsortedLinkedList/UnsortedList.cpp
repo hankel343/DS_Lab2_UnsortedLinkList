@@ -68,12 +68,13 @@ void UnsortedList::DeleteItem(ItemType item, bool& found) {
 	if (temp->data.ComparedTo(item) == EQUAL) { //if node to delete is at the front of the list
 		found = true;
 		if (front->next != NULL) {
-			tempTrailer = front->next;
+			currentPos = tempTrailer = front->next; //moves both currentPos and tempTrailer to the address of front's next node.
 			front = tempTrailer;
 			delete temp;
 		} else {
 			delete temp;
 			front = NULL;
+			currentPos = NULL;
 		}
 		
 	} else {
@@ -105,15 +106,13 @@ void UnsortedList::DeleteItem(ItemType item, bool& found) {
 
 void UnsortedList::GetNextItem() {
 	if (front == NULL) { //if the list is empty.
-		std::cout << "\nThe list is currently empty.\n";
+		std::cout << "The list is currently empty.\n";
 		return;
 	}
 	else if (currentPos->next == NULL) { //currentPos will cycle to front of list if it reaches the end
 		currentPos = front;
-		std::cout << currentPos->data.Get() << std::endl;
 	} else {
 		currentPos = currentPos->next;
-		std::cout << currentPos->data.Get() << std::endl;
 	}
 }
 
@@ -127,6 +126,9 @@ void UnsortedList::MakeEmpty() {
 		temp = temp->next;
 		delete tempTrailer;
 	}
+
+	front = NULL;
+	currentPos = NULL;
 }
 
 bool UnsortedList::IsFull() {
@@ -145,10 +147,56 @@ int UnsortedList::GetLength() {
 	return length;
 }
 
-void UnsortedList::Union(UnsortedList list1, UnsortedList list2) {
+UnsortedList UnsortedList::Union(UnsortedList list1, UnsortedList list2) {
 
+	UnsortedList unionList;
+	Node *temp1 = list1.front, *temp2 = list2.front; //These are iterators for list 1, 2, and unionList respectively.
+	bool match;
 
+	//Runner iterators scan ahead through the list to find duplicates.
+	Node* temp1Runner = temp1->next;
+	while (temp1 != NULL) {
+		match = false;
+		temp1Runner = temp1->next;
+		while (temp1Runner != NULL) {
+			if (temp1->data.ComparedTo(temp1Runner->data) == EQUAL) {
+				match = true;
+			}
+			temp1Runner = temp1Runner->next;
+		}
 
+		if (match == false) { //adds unique elements from list1 to the unionList.
+			unionList.InsertItem(temp1->data);
+		}
+		
+		temp1 = temp1->next;
+	}
+
+	Node* temp3 = unionList.front;
+	while (temp2 != NULL) {
+		match = false;
+		temp3 = unionList.front;
+		while (temp3 != NULL) {
+			if (temp2->data.ComparedTo(temp3->data)) {
+				match = true;
+			}
+
+			if (match == true) {
+				break;
+			} else {
+				temp3 = temp3->next;
+			}
+			
+		}
+
+		if (match == false) {
+			unionList.InsertItem(temp2->data);
+		}
+
+		temp2 = temp2->next;
+	}
+	
+	return unionList;
 }
 
 void UnsortedList::PrintList() {
@@ -165,6 +213,10 @@ void UnsortedList::PrintList() {
 	}
 }
 
-void UnsortedList::GetCurrentPos() {
-
+Node *UnsortedList::GetCurrentPos() {
+	if (currentPos != NULL) {
+		return currentPos;
+	} else {
+		return NULL;
+	}
 }

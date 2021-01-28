@@ -5,8 +5,8 @@
 
 using namespace std;
 
-void ListOperationsMenu(UnsortedList &list);
-void ProcessListOperation(char selection, UnsortedList &list);
+void ListOperationsMenu(UnsortedList &activeList, UnsortedList &passiveList);
+void ProcessListOperation(char selection, UnsortedList &activeList, UnsortedList &passiveList);
 string ConvertToUpperCase(string &userInput);
 
 int main()
@@ -25,9 +25,9 @@ int main()
 		system("cls");
 
 		if (input == "LIST1") {
-			ListOperationsMenu(list1);
+			ListOperationsMenu(list1, list2);
 		} else if (input == "LIST2") {
-			ListOperationsMenu(list2);
+			ListOperationsMenu(list2, list1);
 		} else {
 			cout << "Invalid input - Please try again.\n";
 		}
@@ -41,16 +41,18 @@ int main()
 	return 0;
 }
 
-void ListOperationsMenu(UnsortedList &list) {
+void ListOperationsMenu(UnsortedList &activeList, UnsortedList &passiveList) {
 	char selection = NULL;
 
 	do 
 	{
-		cout << "List contents: \n";
-		list.PrintList();
+		cout << "Contents of the current list: \n";
+		activeList.PrintList();
 
-		cout << "\nCurrent position: \n";
-		list.GetCurrentPos();
+		if (activeList.GetCurrentPos() != NULL) {
+			cout << "\nCurrent position: \n";
+			cout << activeList.GetCurrentPos()->data.Get() << endl;
+		}
 
 		cout << "\nEnter your selection from the menu below: \n\n";
 		cout << "1 - Insert an item into the list.\n";
@@ -61,17 +63,17 @@ void ListOperationsMenu(UnsortedList &list) {
 		cout << "6 - Reset the list to the first value.\n";
 		cout << "7 - Get the length of the list.\n";
 		cout << "8 - Union with a second list.\n";
-		cout << "9 - Print the list.\n";
+		cout << "9 - Print contents of other list.\n";
 		cout << "B - Back.\n\n";
 		cout << "Enter your selection: ";
 		cin >> selection;
 		system("cls");
-		ProcessListOperation(selection, list);
+		ProcessListOperation(selection, activeList, passiveList);
 
 	} while (toupper(selection) != 'B');
 }
 
-void ProcessListOperation(char selection, UnsortedList& list) {
+void ProcessListOperation(char selection, UnsortedList& activeList, UnsortedList& passiveList) {
 	switch (toupper(selection)) {
 	case '1': {
 		ItemType item;
@@ -80,7 +82,7 @@ void ProcessListOperation(char selection, UnsortedList& list) {
 		cin >> inputItem;
 
 		item.Set(inputItem);
-		list.InsertItem(item);
+		activeList.InsertItem(item);
 
 		break;
 	} case '2': {
@@ -91,7 +93,7 @@ void ProcessListOperation(char selection, UnsortedList& list) {
 		cin >> inputItem;
 
 		item.Set(inputItem); 
-		returnValue = list.Search(item); //Search method called (returns an address if found, null if not found)
+		returnValue = activeList.Search(item); //Search method called (returns an address if found, null if not found)
 
 		if (returnValue == NULL) {
 			cout << inputItem << " was not found in the list\n\n";
@@ -108,16 +110,33 @@ void ProcessListOperation(char selection, UnsortedList& list) {
 		cin >> inputItem;
 		item.Set(inputItem);
 
-		list.DeleteItem(item, found);
+		activeList.DeleteItem(item, found);
 		break;
 
 	} case '4': {
-		cout << "The next item after the last input item is: ";
-		list.GetNextItem();
+		activeList.GetNextItem();
 		break;
-	}
-	case '9': {
-		list.PrintList();
+	} case '5': {
+		activeList.MakeEmpty();
+		break;
+	} case '6': {
+		activeList.ResetList();
+		break;
+	} case '7': {
+		cout << "The current length of the list is: " << activeList.GetLength() << endl;
+		break;
+	} case '8': {
+		cout << "Current list: ";
+		activeList.PrintList();
+		cout << "Other list: "; 
+		passiveList.PrintList();
+		cout << "Union of these lists: ";
+		activeList.Union(activeList, passiveList).PrintList();
+		cout << endl;
+		break;
+	} case '9': {
+		cout << "Contents of the other list: \n";
+		passiveList.PrintList();
 		break;
 	} case 'B': {
 		break;

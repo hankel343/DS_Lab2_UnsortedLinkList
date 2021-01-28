@@ -45,7 +45,7 @@ public:
 	//Pre: Object exists
 	//Post: Length of the unsorted list is returned.
 
-	void Union(UnsortedList list1, UnsortedList list2);
+	UnsortedList Union(UnsortedList list1, UnsortedList list2);
 	//Pre: Two unsorted list objects exist.
 	//Post: The mathematical operation union is performed on the two lists -
 	//as if they were two sets. (All elements, if repeated elements, do not include)
@@ -54,7 +54,7 @@ public:
 	//Pre: List object exists.
 	//Post: The list is printed to the console.
 
-	void GetCurrentPos();
+	Node *GetCurrentPos();
 	//Pre: List object exists.
 	//Post: The item that the current position pointer is pointing at is printed to the screen.
 
