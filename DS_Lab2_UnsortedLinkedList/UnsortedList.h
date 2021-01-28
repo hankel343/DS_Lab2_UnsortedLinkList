@@ -58,7 +58,10 @@ public:
 	//Pre: List object exists.
 	//Post: The item that the current position pointer is pointing at is printed to the screen.
 
+	~UnsortedList();
+
 private:
+	int MAX_ITEMS = 5;
 	int length;
 	Node* front; //Head ptr that contains mem. address of front of list
 	Node* currentPos; //Traveling ptr that iterates over the unsorted list.

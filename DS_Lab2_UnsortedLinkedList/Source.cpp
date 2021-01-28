@@ -8,6 +8,7 @@ using namespace std;
 void ListOperationsMenu(UnsortedList &activeList, UnsortedList &passiveList);
 void ProcessListOperation(char selection, UnsortedList &activeList, UnsortedList &passiveList);
 string ConvertToUpperCase(string &userInput);
+void ClientInputValidation(int &input);
 
 int main()
 {
@@ -16,7 +17,7 @@ int main()
 
 	do
 	{
-		cout << "This program has allocated memory for two empty unsorted lists.\n";
+		cout << "This program has allocated memory for two empty unsorted linked lists.\n";
 		cout << "Their names are list1 and list2.\n";
 		cout << "Enter the name of the list that you would like to perform operations on or press 'Q' to quit.\n";
 		cout << "Enter the list name: ";
@@ -79,7 +80,9 @@ void ProcessListOperation(char selection, UnsortedList& activeList, UnsortedList
 		ItemType item;
 		int inputItem;
 		cout << "Enter the information you would like to insert into the list: ";
-		cin >> inputItem;
+		if (!(cin >> inputItem)) {
+			ClientInputValidation(inputItem);
+		}
 
 		item.Set(inputItem);
 		activeList.InsertItem(item);
@@ -90,7 +93,9 @@ void ProcessListOperation(char selection, UnsortedList& activeList, UnsortedList
 		Node *returnValue; //Stores the returned node address from the search.
 		int inputItem;
 		cout << "Enter the item that you would like to search the list for: ";
-		cin >> inputItem;
+		if (!(cin >> inputItem)) {
+			ClientInputValidation(inputItem);
+		}
 
 		item.Set(inputItem); 
 		returnValue = activeList.Search(item); //Search method called (returns an address if found, null if not found)
@@ -107,7 +112,9 @@ void ProcessListOperation(char selection, UnsortedList& activeList, UnsortedList
 		int inputItem;
 		bool found;
 		cout << "Enter the item that you would like to delete from the list: ";
-		cin >> inputItem;
+		if (!(cin >> inputItem)) {
+			ClientInputValidation(inputItem);
+		}
 		item.Set(inputItem);
 
 		activeList.DeleteItem(item, found);
@@ -141,7 +148,7 @@ void ProcessListOperation(char selection, UnsortedList& activeList, UnsortedList
 	} case 'B': {
 		break;
 	} default: {
-		cout << "Unknown input - Please try again.\n";
+		cout << "Unrecognized input - please try again.\n";
 	}
 	
 	}
@@ -154,4 +161,13 @@ string ConvertToUpperCase(string& userInput) {
 	}
 
 	return userInput;
+}
+
+void ClientInputValidation(int& input) {
+	while (!cin) {
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "\aInput for this program should an integer - please try again: ";
+		cin >> input;
+	}
 }

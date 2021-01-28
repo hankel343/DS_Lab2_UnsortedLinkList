@@ -28,6 +28,11 @@ void UnsortedList::InsertItem(ItemType inputItem) {
 	Node *temp = front;
 	Node* tempTrailer = NULL;
 
+	if (IsFull() == true) {
+		std::cout << "The list is full.\n";
+		return;
+	}
+
 	if (front == NULL) {
 		temp = new Node;
 		temp->data = inputItem;
@@ -129,6 +134,7 @@ void UnsortedList::MakeEmpty() {
 
 	front = NULL;
 	currentPos = NULL;
+	length = 0;
 }
 
 bool UnsortedList::IsFull() {
@@ -177,7 +183,7 @@ UnsortedList UnsortedList::Union(UnsortedList list1, UnsortedList list2) {
 		match = false;
 		temp3 = unionList.front;
 		while (temp3 != NULL) {
-			if (temp2->data.ComparedTo(temp3->data)) {
+			if (temp2->data.ComparedTo(temp3->data) == EQUAL) {
 				match = true;
 			}
 
@@ -219,4 +225,8 @@ Node *UnsortedList::GetCurrentPos() {
 	} else {
 		return NULL;
 	}
+}
+
+UnsortedList::~UnsortedList() {
+	MakeEmpty(); //Deallocates memory for the list.
 }

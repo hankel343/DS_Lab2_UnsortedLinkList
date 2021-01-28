@@ -1,7 +1,5 @@
 #ifndef ITEMTYPE_H
 #define ITEMTYPE_H
-
-const int MAX_ITEMS = 100;
 typedef int type;
 
 enum RelationType
