@@ -25,7 +25,7 @@ public:
 	//Post: The item passed as an argument is deleted from the list.
 	//If not found, the item passed into the function is returned.
 
-	void GetNextItem();
+	ItemType GetNextItem();
 	//Pre: Object exists
 	//Post: The next item in the unsorted list is returned from the function.
 
@@ -54,11 +54,9 @@ public:
 	//Pre: List object exists.
 	//Post: The list is printed to the console.
 
-	Node *GetCurrentPos();
-	//Pre: List object exists.
-	//Post: The item that the current position pointer is pointing at is printed to the screen.
-
 	~UnsortedList();
+	//Pre: A list object exists.
+	//Post: Dynamic memory allocated for nodes in the list are deallocated.
 
 private:
 	int MAX_ITEMS = 100;

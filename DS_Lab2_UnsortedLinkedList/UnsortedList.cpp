@@ -109,15 +109,13 @@ void UnsortedList::DeleteItem(ItemType item, bool& found) {
 	}
 }
 
-void UnsortedList::GetNextItem() {
-	if (front == NULL) { //if the list is empty.
-		std::cout << "The list is currently empty.\n";
-		return;
-	}
-	else if (currentPos->next == NULL) { //currentPos will cycle to front of list if it reaches the end
+ItemType UnsortedList::GetNextItem() {
+	if (currentPos->next == NULL) { //currentPos will cycle to front of list if it reaches the end
 		currentPos = front;
+		return currentPos->data;
 	} else {
 		currentPos = currentPos->next;
+		return currentPos->data;
 	}
 }
 
@@ -125,7 +123,7 @@ void UnsortedList::MakeEmpty() {
 	Node *temp = front;
 	Node *tempTrailer = NULL;
 
-	//While loop deallocates memory from each node in the list.
+	//While loop deallocates memory from each node in the list via a trailer pointer.
 	while (temp != NULL) {
 		tempTrailer = temp;
 		temp = temp->next;
@@ -159,10 +157,10 @@ UnsortedList *UnsortedList::Union(UnsortedList* unionListPtr, UnsortedList *list
 
 	//Runner iterators scan ahead through the list to find duplicates.
 	Node* temp1Runner = temp1->next;
-	while (temp1 != NULL) {
+	while (temp1 != NULL) { //Item to be added to unionList if a duplicate is not found.
 		match = false;
 		temp1Runner = temp1->next;
-		while (temp1Runner != NULL) {
+		while (temp1Runner != NULL) { //Scan through the rest of list1 looking for duplicate items.
 			if (temp1->data.ComparedTo(temp1Runner->data) == EQUAL) {
 				match = true;
 			}
@@ -176,21 +174,16 @@ UnsortedList *UnsortedList::Union(UnsortedList* unionListPtr, UnsortedList *list
 		temp1 = temp1->next;
 	}
 
-	Node* temp3 = unionListPtr->front;
-	while (temp2 != NULL) {
+	Node* unionListRunner = unionListPtr->front;
+	while (temp2 != NULL) { //item to be added to the unionList from list2.
 		match = false;
-		temp3 = unionListPtr->front;
-		while (temp3 != NULL) {
-			if (temp2->data.ComparedTo(temp3->data) == EQUAL) {
+		unionListRunner = unionListPtr->front;
+		while (unionListRunner != NULL) { //Pointer to second list.
+			if (temp2->data.ComparedTo(unionListRunner->data) == EQUAL) {
 				match = true;
 			}
-
-			if (match == true) {
-				break;
-			} else {
-				temp3 = temp3->next;
-			}
 			
+			unionListRunner = unionListRunner->next;	
 		}
 
 		if (match == false) {
@@ -214,14 +207,6 @@ void UnsortedList::PrintList() {
 			temp = temp->next;
 		}
 		std::cout << std::endl;
-	}
-}
-
-Node *UnsortedList::GetCurrentPos() {
-	if (currentPos != NULL) {
-		return currentPos;
-	} else {
-		return NULL;
 	}
 }
 
