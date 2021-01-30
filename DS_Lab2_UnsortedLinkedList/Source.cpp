@@ -133,12 +133,18 @@ void ProcessListOperation(char selection, UnsortedList& activeList, UnsortedList
 		cout << "The current length of the list is: " << activeList.GetLength() << endl;
 		break;
 	} case '8': {
+		//Pointers are declared for the union operation so the destructor is not called on the active or passive list at the end of the method.
+		UnsortedList *unionListPtr = new UnsortedList;
+		UnsortedList *activeListPtr = &activeList;
+		UnsortedList* passiveListPtr = &passiveList;
+
 		cout << "Current list: ";
 		activeList.PrintList();
 		cout << "Other list: "; 
 		passiveList.PrintList();
 		cout << "Union of these lists: ";
-		activeList.Union(activeList, passiveList).PrintList();
+		//Union returns a pointer, so this simply calls the PrintList() method on the returned pointer to an UnsortedList type.
+		activeList.Union(unionListPtr, activeListPtr, passiveListPtr)->PrintList();
 		cout << endl;
 		break;
 	} case '9': {

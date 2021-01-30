@@ -153,10 +153,8 @@ int UnsortedList::GetLength() {
 	return length;
 }
 
-UnsortedList UnsortedList::Union(UnsortedList list1, UnsortedList list2) {
-
-	UnsortedList unionList;
-	Node *temp1 = list1.front, *temp2 = list2.front; //These are iterators for list 1, 2, and unionList respectively.
+UnsortedList *UnsortedList::Union(UnsortedList* unionListPtr, UnsortedList *list1, UnsortedList *list2) {
+	Node *temp1 = list1->front, *temp2 = list2->front; //These are iterators for list 1 and 2 respectively.
 	bool match;
 
 	//Runner iterators scan ahead through the list to find duplicates.
@@ -172,16 +170,16 @@ UnsortedList UnsortedList::Union(UnsortedList list1, UnsortedList list2) {
 		}
 
 		if (match == false) { //adds unique elements from list1 to the unionList.
-			unionList.InsertItem(temp1->data);
+			unionListPtr->InsertItem(temp1->data);
 		}
 		
 		temp1 = temp1->next;
 	}
 
-	Node* temp3 = unionList.front;
+	Node* temp3 = unionListPtr->front;
 	while (temp2 != NULL) {
 		match = false;
-		temp3 = unionList.front;
+		temp3 = unionListPtr->front;
 		while (temp3 != NULL) {
 			if (temp2->data.ComparedTo(temp3->data) == EQUAL) {
 				match = true;
@@ -196,13 +194,13 @@ UnsortedList UnsortedList::Union(UnsortedList list1, UnsortedList list2) {
 		}
 
 		if (match == false) {
-			unionList.InsertItem(temp2->data);
+			unionListPtr->InsertItem(temp2->data);
 		}
 
 		temp2 = temp2->next;
 	}
 	
-	return unionList;
+	return unionListPtr;
 }
 
 void UnsortedList::PrintList() {
@@ -228,5 +226,5 @@ Node *UnsortedList::GetCurrentPos() {
 }
 
 UnsortedList::~UnsortedList() {
-	MakeEmpty(); //Deallocates memory for the list.
+	MakeEmpty(); //Deallocates memory for lists that have gone out of scope.
 }

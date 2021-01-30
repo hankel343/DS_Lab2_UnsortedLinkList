@@ -45,7 +45,7 @@ public:
 	//Pre: Object exists
 	//Post: Length of the unsorted list is returned.
 
-	UnsortedList Union(UnsortedList list1, UnsortedList list2);
+	UnsortedList* Union(UnsortedList* UnionList, UnsortedList *list1, UnsortedList *list2);
 	//Pre: Two unsorted list objects exist.
 	//Post: The mathematical operation union is performed on the two lists -
 	//as if they were two sets. (All elements, if repeated elements, do not include)
@@ -61,7 +61,7 @@ public:
 	~UnsortedList();
 
 private:
-	int MAX_ITEMS = 5;
+	int MAX_ITEMS = 100;
 	int length;
 	Node* front; //Head ptr that contains mem. address of front of list
 	Node* currentPos; //Traveling ptr that iterates over the unsorted list.
