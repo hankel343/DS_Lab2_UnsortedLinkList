@@ -161,6 +161,8 @@ void ProcessListOperation(char selection, UnsortedList& activeList, UnsortedList
 			activeList.Union(unionListPtr, activeListPtr, passiveListPtr)->PrintList();
 			cout << endl;
 		}
+
+		delete unionListPtr; //Releases memory allocated for the third list.
 		break;
 	} case '9': {
 		cout << "Contents of the other list: \n";

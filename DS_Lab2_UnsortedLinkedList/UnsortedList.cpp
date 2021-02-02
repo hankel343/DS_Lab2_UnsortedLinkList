@@ -27,6 +27,11 @@ Node *UnsortedList::Search(ItemType inputItem) {
 void UnsortedList::InsertItem(ItemType inputItem) {
 	Node *temp = front;
 
+	if (IsFull() == true) {
+		std::cout << "The list is full\n";
+		return;
+	}
+
 	if (front == NULL) { //If inserting the first item into the list
 		temp = new Node; //Allocate mem. for new node
 		temp->data = inputItem; //Populate data field.
