@@ -162,6 +162,7 @@ void ProcessListOperation(char selection, UnsortedList& activeList, UnsortedList
 			cout << endl;
 		}
 
+		unionListPtr->MakeEmpty(); //Releases memory allocated for each node in the list.
 		delete unionListPtr; //Releases memory allocated for the third list.
 		break;
 	} case '9': {
