@@ -26,34 +26,19 @@ Node *UnsortedList::Search(ItemType inputItem) {
 
 void UnsortedList::InsertItem(ItemType inputItem) {
 	Node *temp = front;
-	Node* tempTrailer = NULL;
 
-	if (IsFull() == true) {
-		std::cout << "The list is full.\n";
-		return;
-	}
+	if (front == NULL) { //If inserting the first item into the list
+		temp = new Node; //Allocate mem. for new node
+		temp->data = inputItem; //Populate data field.
+		temp->next = NULL; 
 
-	if (front == NULL) {
+		front = temp; //Front node points to newly created node.
+	} else {
 		temp = new Node;
 		temp->data = inputItem;
-		temp->next = NULL;
+		temp->next = front; //Creating link between front and new node
 
 		front = temp;
-	} else {
-
-		//Moves the temporary pointer to the end of the list.
-		while (temp != NULL) {
-			tempTrailer = temp;
-			temp = temp->next;
-		}
-
-		//Allocates mem. for new node at end of the list
-		temp = new Node;
-		temp->data = inputItem;
-		temp->next = NULL;
-
-		//Creating link between previous last node and newly inserted last node.
-		tempTrailer->next = temp;
 	}
 
 	length++;
